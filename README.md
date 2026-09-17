@@ -10,6 +10,18 @@ Meu objetivo com este registro é explicar o que aprendi e como passei a interpr
 
 [Consultar minha credencial no Microsoft Learn](https://learn.microsoft.com/pt-br/users/gabrielcerqueira-5326/credentials/6fb739d6d1e917a6)
 
+![Credencial Microsoft Applied Skills de Gabriel Cerqueira, obtida em 17 de setembro de 2026](assets/credencial-microsoft-entra-id.png)
+
+*Comprovante da credencial obtida. A imagem não contém enunciados ou respostas da avaliação.*
+
+## Resultado e próximos estudos
+
+Concluí a avaliação em **17 de setembro de 2026**, com **80% de resultado geral e aprovação**. O relatório de desempenho apresentou indicação positiva nas áreas de gerenciamento de usuários, gerenciamento de grupos e proteção de senhas.
+
+Também identifiquei três temas que quero revisar com mais atenção: **Acesso Condicional**, **autenticação multifator (MFA)** e **redefinição de senha por autoatendimento (SSPR)**. Vou usar esse retorno para direcionar meus próximos estudos, aprofundando a interpretação de políticas, métodos de autenticação e escopos de aplicação.
+
+Essas prioridades se baseiam nos indicadores gerais do relatório de desempenho. Eles não permitem determinar quais configurações específicas estavam incorretas nem representam uma pontuação individual por tema. O plano de revisão é uma próxima etapa, ainda não concluída.
+
 ## Entender o ambiente antes de alterar
 
 Ao trabalhar no ambiente, precisei distinguir duas responsabilidades: administrar objetos e consultar configurações para documentar o estado existente. Essa diferença parece simples, mas muda a maneira de conduzir a atividade. Uma consulta exige cuidado para registrar o que está configurado; uma alteração exige compreender seu efeito sobre o acesso.
@@ -104,7 +116,7 @@ O maior ganho foi passar a observar a relação entre as configurações. Criar 
 
 Esta experiência ocorreu em um ambiente temporário de avaliação. Não mantenho uma reprodução independente do tenant e não realizei novos testes após o encerramento do ambiente. O repositório documenta meu aprendizado, sem alegar implantação em produção ou disponibilizar um laboratório reproduzível.
 
-Para preservar o conteúdo da avaliação, não foram incluídos enunciados, e-mails, respostas, capturas de tela, parâmetros ou resultados específicos. Também não constam credenciais, domínios, endereços IP ou identificadores do ambiente. A troca de nomes em um print não seria suficiente para preservar o conteúdo técnico da prova; por isso, escolhi representações conceituais.
+Para preservar o conteúdo da avaliação, não foram incluídos enunciados, e-mails, respostas, capturas do ambiente de avaliação, parâmetros ou resultados de tarefas específicas. Também não constam credenciais, domínios, endereços IP ou identificadores do ambiente. A troca de nomes em um print não seria suficiente para preservar o conteúdo técnico da prova; por isso, escolhi representações conceituais.
 
 Como continuidade possível, um cenário próprio permitiria acrescentar evidências reais e anonimizadas de execução, com requisitos independentes e testes documentados. Essa etapa ainda não foi realizada.
 
