@@ -1,79 +1,110 @@
-# Microsoft Entra ID — Registro de aprendizado em IAM
+# Microsoft Entra ID — Minha experiência com identidades e acessos
 
-Registro pessoal de Gabriel Cerqueira sobre os conhecimentos trabalhados no laboratório associado à credencial **Microsoft Applied Skills: Get started with identities and access using Microsoft Entra**.
+Durante o laboratório associado à credencial **Microsoft Applied Skills: Get started with identities and access using Microsoft Entra**, trabalhei com administração de identidades e análise de configurações de segurança em um ambiente temporário.
 
-## Objetivo e contexto
+Meu objetivo com este registro é explicar o que aprendi e como passei a interpretar as relações entre contas, grupos, permissões e políticas. Essa experiência faz parte do meu desenvolvimento em Gestão de Identidades e Acessos (IAM) e Segurança da Informação.
 
-Consolidar aprendizados de administração de identidades e acessos em um ambiente temporário de estudo. A experiência envolveu operações administrativas no Microsoft Entra ID e a leitura de configurações de segurança.
+> **Sobre os gráficos:** os diagramas deste documento foram elaborados após a experiência para explicar os conceitos. Utilizam identificadores genéricos e não reproduzem a estrutura nem os resultados da avaliação. São ilustrações do aprendizado, não capturas ou evidências de execução.
 
-Este material é uma reflexão técnica autoral. Não constitui implantação em produção, laboratório reproduzível ou guia de resolução da avaliação. O ambiente original não está disponível para novos testes.
+## Entender o ambiente antes de alterar
 
-## Áreas trabalhadas
+Ao trabalhar no ambiente, precisei distinguir duas responsabilidades: administrar objetos e consultar configurações para documentar o estado existente. Essa diferença parece simples, mas muda a maneira de conduzir a atividade. Uma consulta exige cuidado para registrar o que está configurado; uma alteração exige compreender seu efeito sobre o acesso.
 
-| Área | Aprendizado |
+Organizei este relato por temas, sem reproduzir a ordem ou os requisitos específicos da avaliação. O ponto de partida foi entender como uma identidade se relaciona com seus atributos, sua participação em grupos e suas permissões.
+
+## Contas, grupos e responsabilidades
+
+O contato com a administração de usuários me ajudou a relacionar o cadastro de uma conta com seu estado de habilitação, atributos e licenciamento. Também trabalhei com o conceito de colaboração externa, em que a identidade convidada precisa ser reconhecida como parte de um contexto de acesso diferente daquele de uma conta interna.
+
+Nos grupos, um aprendizado importante foi separar a participação como membro da responsabilidade como proprietário. Ao documentar essas relações, ficou mais claro que o nome de um grupo não explica, por si só, o acesso que ele oferece: é preciso examinar suas associações e atribuições.
+
+O desenho abaixo usa objetos fictícios para representar essas relações. As setas indicam associação ou responsabilidade, e não uma sequência de configuração.
+
+```mermaid
+flowchart TD
+    A["Conta interna A"] -->|membro| G["Grupo de acesso"]
+    B["Responsável B"] -->|proprietário| G
+    G -->|recebe atribuição| R["Permissão sobre recurso"]
+    A -->|possui| P["Perfil e estado da conta"]
+    A -->|recebe| L["Licença de serviço"]
+    C["Identidade externa C"] -->|colabora conforme autorização| R
+```
+
+*Figura 1 — Relações conceituais entre identidades, grupos e acesso. Os objetos são fictícios e não representam o tenant da avaliação.*
+
+## Planejar a atribuição de funções
+
+Uma das dificuldades que encontrei envolveu a relação entre grupos e funções administrativas. A experiência mostrou que certos requisitos precisam ser considerados na criação do objeto, em vez de serem tratados como um ajuste comum posterior.
+
+Esse ponto reforçou um hábito que quero levar para o trabalho: antes de criar um grupo, entender sua finalidade e o tipo de acesso que ele deverá administrar. Também ficou mais evidente a diferença entre uma atribuição de função, a associação a um grupo e a propriedade desse grupo.
+
+Em uma aplicação profissional, esse entendimento ajuda a discutir quem precisa de uma permissão, por qual motivo e em qual escopo. Essa é uma interpretação do aprendizado; o laboratório não representa uma implantação dessa governança em produção.
+
+## Consultar segurança com atenção ao escopo
+
+Na leitura das configurações de senha e autenticação, percebi como é fácil encontrar uma informação relacionada ao tema e assumir que ela responde à consulta inteira. Uma configuração referente a administradores, por exemplo, precisa ser interpretada dentro desse público.
+
+Passei a dar mais atenção a três perguntas: qual configuração estou consultando, a quem ela se aplica e o que a tela realmente permite concluir? O mesmo raciocínio ajudou na leitura das localizações nomeadas, em que é necessário distinguir definições geográficas de definições por intervalos de rede.
+
+O gráfico resume essa forma de conferir uma informação antes de registrá-la:
+
+```mermaid
+flowchart TD
+    A["Configuração consultada"] --> B{"O escopo corresponde à análise?"}
+    B -->|Não| C["Localizar a configuração adequada"]
+    C --> A
+    B -->|Sim| D{"A informação está visível?"}
+    D -->|Não| E["Registrar a limitação"]
+    D -->|Sim| F["Documentar o estado observado"]
+```
+
+*Figura 2 — Método de conferência sintetizado a partir do aprendizado. Não representa o fluxo de tarefas da avaliação.*
+
+## Interpretar o Acesso Condicional
+
+A análise com a ferramenta What If foi útil para compreender que o resultado de uma simulação depende do contexto informado. Identidade, recurso e condições de acesso precisam ser considerados em conjunto.
+
+Outro aprendizado foi separar a correspondência de uma política com o cenário de seu estado de imposição. Ver uma política entre os resultados exige examinar também se ela está ativa ou em modo somente relatório. Isso evita transformar uma observação da simulação em uma conclusão indevida sobre o comportamento de um acesso real.
+
+```mermaid
+flowchart TD
+    I["Identidade e recurso"] --> S["Simulação de acesso"]
+    C["Contexto de entrada"] --> S
+    S --> A["Políticas correspondentes"]
+    S --> N["Políticas não correspondentes"]
+    A --> E["Conferir estado e controles"]
+    N --> M["Examinar motivos"]
+    E --> R["Registrar a interpretação"]
+    M --> R
+```
+
+*Figura 3 — Leitura conceitual de uma simulação. Não contém parâmetros, nomes de políticas ou resultados da avaliação.*
+
+Não interpreto essa simulação como prova de autenticação bem-sucedida ou de conformidade de um dispositivo. Ela é uma ferramenta de análise cujo resultado precisa ser lido dentro das entradas utilizadas e das limitações do teste.
+
+## O que levo dessa experiência
+
+O maior ganho foi passar a observar a relação entre as configurações. Criar uma conta, associá-la a um grupo e interpretar uma política são atividades conectadas, mas cada uma responde a uma necessidade diferente.
+
+| Tema | Aprendizado que consolidei |
 |---|---|
-| Usuários | Administração de contas, atributos de perfil e estado de habilitação |
-| Licenciamento | Relação entre usuário, local de uso e atribuição de licença |
-| Grupos | Diferença entre membros e proprietários e organização de acessos |
-| Funções administrativas | Atribuição de permissões e distinção entre funções e associação a grupos |
-| Identidades externas | Conceito de colaboração com usuários convidados |
-| Proteção de senhas | Leitura e documentação das configurações existentes |
-| Redefinição de senhas | Interpretação de métodos de autenticação e do escopo das políticas |
-| Acesso Condicional | Análise de atribuições, condições e resultados de simulação |
-| Localizações nomeadas | Interpretação de localizações definidas por países ou regiões |
-| Documentação | Registro fiel do estado observado, separando evidência de suposição |
+| Administração de usuários | Relacionar atributos, estado da conta e licenciamento |
+| Grupos e funções | Distinguir membros, proprietários e permissões administrativas |
+| Colaboração externa | Reconhecer o contexto de uma identidade convidada |
+| Senhas e autenticação | Conferir a configuração e o público ao qual ela se aplica |
+| Localizações nomeadas | Diferenciar definições por países e por rede |
+| Acesso Condicional | Interpretar contexto, correspondência e estado das políticas |
+| Documentação técnica | Separar observação, interpretação e informação ainda não confirmada |
 
-## Processo de trabalho
+## Limites deste registro
 
-A experiência foi organizada em quatro frentes, descritas em nível conceitual:
+Esta experiência ocorreu em um ambiente temporário de avaliação. Não mantenho uma reprodução independente do tenant e não realizei novos testes após o encerramento do ambiente. O repositório documenta meu aprendizado, sem alegar implantação em produção ou disponibilizar um laboratório reproduzível.
 
-1. **Compreensão do ambiente:** identificar o objetivo das atividades e distinguir operações de configuração de consultas para documentação.
-2. **Administração de identidades:** trabalhar com contas, grupos, licenciamento e permissões, observando o escopo de cada alteração.
-3. **Leitura de segurança:** consultar configurações e reconhecer que políticas de públicos diferentes não devem ser tratadas como equivalentes.
-4. **Análise e registro:** interpretar simulações de acesso, relacionar os resultados aos parâmetros utilizados e documentar somente o que foi observado.
+Para preservar o conteúdo da avaliação, não foram incluídos enunciados, e-mails, respostas, capturas de tela, parâmetros ou resultados específicos. Também não constam credenciais, domínios, endereços IP ou identificadores do ambiente. A troca de nomes em um print não seria suficiente para preservar o conteúdo técnico da prova; por isso, escolhi representações conceituais.
 
-Esta síntese não preserva a sequência, os valores ou os resultados específicos da avaliação.
-
-## Principais aprendizados
-
-### Planejar os grupos antes da criação
-
-A experiência reforçou a importância de verificar previamente se um grupo precisa receber funções administrativas. Esse requisito influencia sua criação e não deve ser tratado como uma propriedade comum de edição posterior.
-
-### Separar associação e responsabilidade
-
-Ser membro de um grupo e ser seu proprietário representam responsabilidades diferentes. Da mesma forma, a atribuição de uma função administrativa deve ser analisada pelo acesso que concede.
-
-### Conferir o escopo da configuração
-
-Uma tela referente à política de administradores não basta para descrever toda a configuração de redefinição de senhas da organização. O registro precisa corresponder à configuração e ao público efetivamente analisados.
-
-### Distinguir correspondência e imposição de uma política
-
-Na análise de Acesso Condicional, uma política pode corresponder ao cenário simulado e estar em modo somente relatório. Ler o estado da política é tão importante quanto identificar sua presença no resultado.
-
-### Tratar a simulação como evidência limitada
-
-O resultado depende das entradas utilizadas. A análise deve considerar identidade, recurso e contexto de acesso. Uma simulação não equivale à comprovação de um acesso real bem-sucedido.
-
-## Limitações e transparência
-
-- Ambiente temporário disponibilizado para estudo e avaliação.
-- Sem reprodução independente posterior ou ambiente operacional mantido neste repositório.
-- Sem alegação de automação, uso de infraestrutura como código ou validação em produção.
-- Credencial mencionada como contexto da experiência; link público de verificação ainda não adicionado.
-
-## Preservação do conteúdo da avaliação
-
-Este repositório não inclui enunciados, e-mails do laboratório, respostas, combinações de parâmetros, resultados específicos, capturas da avaliação, arquivos fornecidos pela plataforma ou roteiros para sua resolução.
-
-Também foram excluídos nomes de contas e grupos do cenário, domínios do tenant, endereços IP, identificadores de sessão e quaisquer credenciais. A visibilidade privada não substitui esse cuidado.
-
-## Continuidade dos estudos
-
-Uma possibilidade de evolução é criar um cenário independente para aprofundar a validação de permissões e políticas. Essa reprodução ainda não foi realizada.
+Como continuidade possível, um cenário próprio permitiria acrescentar evidências reais e anonimizadas de execução, com requisitos independentes e testes documentados. Essa etapa ainda não foi realizada.
 
 ---
 
-**Autor:** Gabriel Cerqueira  
-**Foco:** Gestão de Identidades e Acessos (IAM) e Segurança da Informação
+**Gabriel Cerqueira**  
+Registro de aprendizado em Microsoft Entra ID e Gestão de Identidades e Acessos.
