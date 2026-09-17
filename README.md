@@ -1,0 +1,1 @@
+# estudos-microsoft-entra-id
