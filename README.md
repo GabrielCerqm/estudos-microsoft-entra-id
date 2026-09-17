@@ -6,6 +6,10 @@ Meu objetivo com este registro é explicar o que aprendi e como passei a interpr
 
 > **Sobre os gráficos:** os diagramas deste documento foram elaborados após a experiência para explicar os conceitos. Utilizam identificadores genéricos e não reproduzem a estrutura nem os resultados da avaliação. São ilustrações do aprendizado, não capturas ou evidências de execução.
 
+## Credencial
+
+[Consultar minha credencial no Microsoft Learn](https://learn.microsoft.com/pt-br/users/gabrielcerqueira-5326/credentials/6fb739d6d1e917a6)
+
 ## Entender o ambiente antes de alterar
 
 Ao trabalhar no ambiente, precisei distinguir duas responsabilidades: administrar objetos e consultar configurações para documentar o estado existente. Essa diferença parece simples, mas muda a maneira de conduzir a atividade. Uma consulta exige cuidado para registrar o que está configurado; uma alteração exige compreender seu efeito sobre o acesso.
